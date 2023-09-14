@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  postgres:
+    container_name: account-service-db
+    image: postgres:14-alpine3.14
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: account-service-db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: qwerty123
+    ports:
+      - "5432:5432"
