@@ -2,15 +2,14 @@ package io.sultanov.accountservice.api.controller;
 
 import io.sultanov.accountservice.domain.auth.AuthService;
 import io.sultanov.accountservice.domain.auth.LoginRequest;
+import io.sultanov.accountservice.domain.response.ChangePasswordResponse;
+import io.sultanov.accountservice.domain.user.ChangePasswordRequest;
 import io.sultanov.accountservice.domain.user.User;
 import io.sultanov.accountservice.domain.user.UserService;
 import jakarta.security.auth.message.AuthException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,7 +25,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @RequestBody LoginRequest loginRequest) throws AuthException {
+    public String login(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
+    }
+
+    @PutMapping("/changepass")
+    public ChangePasswordResponse changePassword(@Valid @RequestBody ChangePasswordRequest request) {
+        return userService.changePassword(request);
     }
 }

@@ -1,5 +1,6 @@
 package io.sultanov.accountservice.handler;
 
+import io.sultanov.accountservice.domain.user.ChangePasswordRequest;
 import io.sultanov.accountservice.domain.user.User;
 import io.sultanov.accountservice.domain.user.UserDetailsImpl;
 import org.apache.ibatis.annotations.*;
@@ -31,4 +32,11 @@ public interface UserMapper {
             RETURNING id;
             """)
     Long insertUser(User user) throws RuntimeException;
+
+    @Update("""
+            UPDATE "user"
+            SET password = '${request.newPassword}'
+            WHERE email = '${email}';
+            """)
+    void updatePassword(@Param("email") String email, ChangePasswordRequest request);
 }
